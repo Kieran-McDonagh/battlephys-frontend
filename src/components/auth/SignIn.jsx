@@ -1,19 +1,29 @@
 import React from "react";
 import { useState } from "react";
 import { auth } from "../../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  browserSessionPersistence,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { Link } from "react-router-dom";
-import SignUp from "./SignUp";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      console.log(userCredential);
-    });
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        return signInWithEmailAndPassword(auth, email, password);
+      })
+      .then((userCredential) => {
+        setUser(userCredential.user);
+      });
   };
 
   return (
