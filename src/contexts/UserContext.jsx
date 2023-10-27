@@ -1,20 +1,24 @@
-import { createContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import React, { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    return auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser({});
-      }
-    });
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData) {
+      setUser(userData.user);
+    }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("userData", JSON.stringify({ user }));
+    } else {
+      localStorage.removeItem("userData");
+    }
+  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

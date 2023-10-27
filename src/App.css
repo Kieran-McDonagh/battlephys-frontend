@@ -1,18 +1,54 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
-
 
 .sign-up-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  row-gap: 10px;
 }
 
-/* #goal {
-  width: 10rem;
-} */
+.sign-up-form input, select {
+  width: 75%;
+  text-align: center;
+  margin: 0;
+}
+
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.sign-in-form input {
+  width: 75%;
+  text-align: center;
+  margin: 0;
+}
+
+.sign-in-error {
+  color: #ff0000;
+}
+
+.top-nav-bar {
+  width: 80vw;
+}
+
+.homepage .greeting {
+  margin: 2rem auto;
+}
+
+.homepage .homepage-stats-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.exercise-details {
+  color: white;
+}

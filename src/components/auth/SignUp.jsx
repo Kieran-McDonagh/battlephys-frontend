@@ -10,18 +10,18 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { postNewUser } from "../../../utils/apiCalls";
 import { calorieCalculation } from "../../../utils/calorieCalculation";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [goal, setGoal] = useState("");
-  const [weight, setWeight] = useState(0);
-  const [height, setHeight] = useState(0);
-  const [age, setAge] = useState(0);
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
+  const [age, setAge] = useState("");
   const [sex, setSex] = useState("");
 
   const handleSubmit = async (e) => {
@@ -65,6 +65,7 @@ const SignUp = () => {
         <h1>Create an account</h1>
         <label htmlFor="email">Enter your email:</label>
         <input
+          required
           id="email"
           type="email"
           placeholder="user@email.com"
@@ -76,6 +77,7 @@ const SignUp = () => {
 
         <label htmlFor="username">Create a username:</label>
         <input
+          required
           id="username"
           type="text"
           value={username}
@@ -85,6 +87,7 @@ const SignUp = () => {
         />
         <label htmlFor="password">Create a password:</label>
         <input
+          required
           id="password"
           type="password"
           value={password}
@@ -94,6 +97,7 @@ const SignUp = () => {
         />
         <label htmlFor="goal">Goal:</label>
         <select
+          required
           name="goal"
           id="goal"
           value={goal}
@@ -108,6 +112,7 @@ const SignUp = () => {
         </select>
         <label htmlFor="weight">Current weight(kg):</label>
         <input
+          required
           id="weight"
           type="number"
           value={weight}
@@ -117,6 +122,7 @@ const SignUp = () => {
         />
         <label htmlFor="height">Height(cm):</label>
         <input
+          required
           id="height"
           type="number"
           value={height}
@@ -126,6 +132,7 @@ const SignUp = () => {
         />
         <label htmlFor="age">Age:</label>
         <input
+          required
           id="age"
           type="number"
           value={age}
@@ -135,6 +142,7 @@ const SignUp = () => {
         />
         <label htmlFor="sex">Sex:</label>
         <select
+          required
           name="sex"
           id="sex"
           value={sex}
@@ -149,6 +157,9 @@ const SignUp = () => {
 
         <button type="submit">Sign up</button>
       </form>
+      <h3>
+        Already have an account? <Link to="/">Log in</Link>
+      </h3>
     </div>
   );
 };
