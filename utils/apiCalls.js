@@ -22,3 +22,14 @@ export const getMongoData = async (uid) => {
     console.error("Error fetching user data:", error);
   }
 };
+
+export const getFeaturedWorkouts = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/featuredWorkouts`)
+    const {data} = response
+    const {featuredWorkouts} = data
+    return featuredWorkouts
+  } catch (error) {
+    
+  }
+}

@@ -1,16 +1,23 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
+import NewExercise from "./NewExercise";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function AlertDialogSlide() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [count, setCount] = useState(1);
+  const [countArray, setCountArray] = useState([0]);
+  const [workoutDetails, setWorkoutDetails] = useState({});
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+  const [type, setType] = useState("Reps");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,6 +25,17 @@ export default function AlertDialogSlide() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleAddExercise = () => {
+    setCount((prevCount) => prevCount + 1);
+    setCountArray((prevCountArray) => [...prevCountArray, count]);
+    setWorkoutDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: {
+        [type]: number,
+      },
+    }));
   };
 
   return (
@@ -38,19 +56,58 @@ export default function AlertDialogSlide() {
         PaperProps={{
           sx: {
             backgroundColor: "black",
+            maxWidth: "80%",
           },
         }}
       >
         <DialogContent>
-          <div className="exercise-details">
-            <label htmlFor="exercise1">Exercise name: </label>
-            <input id="exercise1" type="text" />
-            <label htmlFor="reps1"> reps: </label>
-            <input id="reps1" type="number" />
-          </div>
+          <label
+            className="workout-description-label"
+            htmlFor="workout-description"
+          >
+            Workout description:{" "}
+          </label>
+          <input
+            id="workout-description"
+            type="text"
+            value={workoutDetails.workoutDescription || ""}
+            onChange={(event) => {
+              setWorkoutDetails((prevDetails) => ({
+                ...prevDetails,
+                workoutDescription: event.target.value,
+              }));
+            }}
+          />
+          {countArray.map((item) => {
+            return (
+              <NewExercise
+                name={name}
+                setName={setName}
+                number={number}
+                setNumber={setNumber}
+                item={item}
+                key={item}
+                workoutDetails={workoutDetails}
+                setWorkoutDetails={setWorkoutDetails}
+                type={type}
+                setType={setType}
+              />
+            );
+          })}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+          <Button onClick={handleAddExercise} sx={{ textTransform: "none" }}>
+            Add exercise
+          </Button>
+          <Button
+            onClick={() => {
+              handleAddExercise;
+              console.log(workoutDetails);
+              // post workout here then optimistically render
+              handleClose();
+            }}
+            sx={{ textTransform: "none" }}
+          >
             Create workout
           </Button>
         </DialogActions>
