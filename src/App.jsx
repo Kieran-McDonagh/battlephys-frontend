@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { UserContext } from "./contexts/UserContext";
 import Homepage from "./components/Homepage";
 import Navigation from "./components/Navigation";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   const { user } = useContext(UserContext);
@@ -25,6 +26,7 @@ function App() {
         <Navigation />
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/user" element={<UserProfile />} />
         </Routes>
       </div>
     );
